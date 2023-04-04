@@ -65,3 +65,13 @@ miner.setEtherbase(eth.accounts[0])
 miner.start()
 miner.stop()
 eth.accounts
+miner.setEtherbase(eth.accounts[0])
+miner.start()
+miner.stop()
+miner.start()
+miner.stop()
+miner.start()
+miner.stop()
+eth.accounts
+miner.start()
+miner.stop()

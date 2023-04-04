@@ -37,17 +37,6 @@ export async function checkBalance(account) {
   }
 }
 
-// export default async function handler(req, res) {
-//     try {
-//         let account = '0x717c913b027e831f82b8623be4550e2e92fb96b4';
-//         let balance = await contract.methods.balanceOf(account).call();
-//         console.log(`Account balance of ${account}: ${balance}`);
-//         res.status(200).json({ balance: balance });
-//       } catch (error) {
-//         console.error(error);
-//       }
-// }
-
 //function to transfer tokens
 // export async function transfer(from_, to, amt) {
 //   try {
