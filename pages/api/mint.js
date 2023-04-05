@@ -12,17 +12,25 @@ export default async function handler(req, res) {
 
     // Instantiate smart contract object
     const contract = new web3.eth.Contract(contractAbi, contractAddress);
-    
-    return contract.methods
-    .mint2000()
-    .send({ from: '0x717c913b027e831f82b8623be4550e2e92fb96b4' })
-    .then((response) => {
-        console.log(response);
-        res.status(200).send("Minting successful");
-    })
-    .catch((error) => {
-        console.error(error);
-        res.status(500).send("Error while minting");
-    });
+    contract.methods
+        .mint2000()
+        .send({ from: '0x717c913b027e831f82b8623be4550e2e92fb96b4' })
+        .then((response) => {
+            console.log(response);
+            var totalTokenSupply = contract.methods.totalSupply().call((err, result) => {
+                if (err) {
+                    console.error('Error calling totalSupply():', err);
+                } else {
+                    console.log('Total supply:', result);
+                    result = result / (10 ** 18);
+                    var data = result.toFixed(1);
+                    res.status(200).send({ mintingStatus: "Minting successful", totalSupply: data });
+                }
+            })
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send("Error while minting");
+        });
 
 }

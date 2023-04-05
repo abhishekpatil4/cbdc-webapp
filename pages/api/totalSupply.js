@@ -12,19 +12,17 @@ export default async function handler(req, res) {
 
     // Instantiate smart contract object
     const contract = new web3.eth.Contract(contractAbi, contractAddress);
-
-    const from_ = req.body.from;
-    const to = req.body.to;
-    const amt = req.body.amount;
-    try {
-        console.log(from_ + ' ' + to + ' ' + amt);
-        contract.methods
-            .transfer(to, amt)
-            .send({ from: from_ })
-            .then(console.log);
-            res.status(200).send("Transfer successful");
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Error while transfering");
-    }
+    contract.methods.totalSupply().call((err, result) => {
+        if (err) {
+            console.error('Error calling totalSupply():', err);
+          } else {
+            console.log('Total supply:', result);
+            result = result/(10**18);
+            var data = result.toFixed(1);
+            res.status(200).send({totalSupply : data});
+          }
+    })
 }
+
+
+
