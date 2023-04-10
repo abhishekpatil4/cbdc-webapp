@@ -13,7 +13,8 @@ export default async function handler(req, res) {
     // Instantiate smart contract object
     const contract = new web3.eth.Contract(contractAbi, contractAddress);
     try {
-        let account = '0xaf28babb597903f16a4ede2a08fc9393f451034b';
+        // let account = '0xaf28babb597903f16a4ede2a08fc9393f451034b';
+        let account = req.body.address;
         let balance = await contract.methods.balanceOf(account).call();
         console.log(`Account balance of ${account}: ${balance}`);
         res.status(200).json({ balance: balance });
