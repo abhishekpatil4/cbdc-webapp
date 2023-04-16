@@ -381,3 +381,36 @@
 10:11:41.279849 version@stat F·[3 1] S·667B[486B 181B] Sc·[0.75 0.00]
 10:11:41.329436 db@janitor F·6 G·0
 10:11:41.329480 db@open done T·67.473332ms
+10:21:29.546315 db@close closing
+10:21:29.546509 db@close done T·191.218µs
+=============== Apr 10, 2023 (IST) ===============
+10:24:04.642089 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+10:24:04.642334 version@stat F·[3 1] S·667B[486B 181B] Sc·[0.75 0.00]
+10:24:04.642369 db@open opening
+10:24:04.642466 journal@recovery F·1
+10:24:04.642950 journal@recovery recovering @87
+10:24:04.661834 memdb@flush created L0@89 N·1 S·162B "loc..seq,v56":"loc..seq,v56"
+10:24:04.662459 version@stat F·[4 1] S·829B[648B 181B] Sc·[1.00 0.00]
+10:24:04.742613 db@janitor F·7 G·0
+10:24:04.742653 db@open done T·100.261749ms
+10:24:04.742726 table@compaction L0·4 -> L1·1 S·829B Q·57
+10:24:04.754494 table@build created L1@92 N·2 S·181B "loc..seq,v56":"version,v1"
+10:24:04.754601 version@stat F·[0 1] S·181B[0B 181B] Sc·[0.00 0.00]
+10:24:04.781764 table@compaction committed F-4 S-648B Ke·0 D·4 T·38.94163ms
+10:24:04.782014 table@remove removed @86
+10:24:04.785064 table@remove removed @83
+10:24:04.785847 table@remove removed @80
+10:24:04.785958 table@remove removed @79
+=============== Apr 10, 2023 (IST) ===============
+11:36:49.712296 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+11:36:49.713112 version@stat F·[0 1] S·181B[0B 181B] Sc·[0.00 0.00]
+11:36:49.713146 db@open opening
+11:36:49.713243 journal@recovery F·1
+11:36:49.715123 journal@recovery recovering @90
+11:36:49.723943 memdb@flush created L0@93 N·1 S·162B "loc..seq,v58":"loc..seq,v58"
+11:36:49.727295 version@stat F·[1 1] S·343B[162B 181B] Sc·[0.25 0.00]
+11:36:49.780262 db@janitor F·5 G·1
+11:36:49.780319 db@janitor removing table-89
+11:36:49.780512 db@open done T·67.348699ms
+12:04:07.369965 db@close closing
+12:04:07.370064 db@close done T·97.121µs

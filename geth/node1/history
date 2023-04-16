@@ -191,3 +191,15 @@ miner.stop()
 eth.accounts
 miner.start()
 miner.stop()
+miner.setEtherbase(eth.accounts[0])
+eth.accounts
+miner.start()
+miner.stop()
+eth.account
+eth.accounts[0]
+eth.accounts
+eth.account[0]
+eth.account 0
+eth.account
+web3
+web3.eth.getPrivateKey(eth.accounts[0])
