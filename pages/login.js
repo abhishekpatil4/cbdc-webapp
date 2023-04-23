@@ -10,7 +10,7 @@ export default function login() {
                         <p className="font-thin">Enter your Credentials</p>
                     </div>
                     <form>
-                        {/* <!-- Email input --> */}
+                        {/* <!-- username or account address input --> */}
                         <div class="mb-6">
                             <input
                                 type="text"
