@@ -11,7 +11,7 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
-    "flowbite": "^1.6.4",
+    "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.2",
     "fs": "^0.0.1-security",
     "next": "13.2.4",

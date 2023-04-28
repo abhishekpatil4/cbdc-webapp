@@ -1,5 +1,6 @@
 import '@/styles/globals.css'
 import Layout from '../components/Layout'
+import 'flowbite'
 
 export default function App({ Component, pageProps }) {
   return (
