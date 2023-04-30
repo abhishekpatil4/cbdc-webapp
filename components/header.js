@@ -21,30 +21,28 @@ export default function sidebar_test() {
                         <div class="flex items-center">
                             <div class="flex items-center ml-3">
                                 <div>
-                                    <button type="button" class="flex text-sm bg-white-800 focus:bg-slate-100 px-2 py-1 rounded-sm" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                                    <button type="button" class="flex text-sm bg-white-800 focus:bg-slate-100 px-3 py-1 mr-9 rounded-sm" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                         <span class="sr-only">Open user menu</span>
                                         {/* <img class="w-8 h-8 rounded-full" src="/public/dp.jpg" alt="user photo"/> */}
                                         <span className="font-medium text-base">abhishekpatil4  ▼</span>
                                     </button>
                                 </div>
-                                <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
+                                <div class="z-50 hidden my-4 mr-9 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
                                     <div class="px-4 py-3" role="none">
                                         <p class="text-sm text-gray-900 dark:text-white" role="none">
                                             Abhishek Patil
                                         </p>
                                         <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                            abhishekpatil4@gmail.com
+                                            0x717c913b027e83... 
+                                            {/* 1f82b8623be4550e2e92fb96b4 */}
                                         </p>
                                     </div>
                                     <ul class="py-1" role="none">
                                         <li>
-                                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
+                                            <Link href="/home" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</Link>
                                         </li>
                                         <li>
-                                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
+                                            <Link href="/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</Link>
                                         </li>
                                         <li>
                                             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
@@ -63,7 +61,7 @@ export default function sidebar_test() {
                         <li>
                             <Link href="/home" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                                 <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
-                                <span class="ml-3">Transfer</span>
+                                <span class="ml-3">Dashboard</span>
                             </Link>
                         </li>
                         <li>
