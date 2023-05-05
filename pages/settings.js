@@ -1,13 +1,9 @@
 import { useSession, getSession, signIn } from "next-auth/react"
 import { useEffect, useState } from "react"
 
-
-
 export default function settingss() {
     const { data: session } = useSession()
-
     const [loading, setLoading] = useState(true)
-
     useEffect(() => {
         const securePage = async () => {
             const session = await getSession()

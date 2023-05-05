@@ -10,17 +10,22 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await signOut({ redirect: false }); // clear the session data
+    console.log('username-> ' + username + ' password-> ' + password);
     const result = await signIn("credentials", {
       username,
       password,
       redirect: false,
     });
-    console.log('handling submit')
-    console.log(result);
+    if(result.status === 401){
+      console.log('invalid credentials')
+      setError(10);
+      // alert('Ivalid Credentials!\nPlease retry')
+    }
     // Redirect the user to the appropriate page based on the result of the authentication process
   };
 
@@ -58,6 +63,7 @@ export default function Home() {
           <div className="flex justify-center pt-10">
             <div className="xl:w-3/12 lg:w-3/12 md:w-8/12 md:mb-0 bg-white px-12 py-16 rounded-lg drop-shadow-md">
               <div className="text-center py-9">
+              {error && (<p className="font-normal bg-red-500 text-white mb-4 rounded-md py-1.5">Error: Invalid Credentials</p>)}
                 <p className="font-bold text-3xl pb-3">Login</p>
                 <p className="font-thin">Enter your Credentials</p>
               </div>
@@ -69,7 +75,9 @@ export default function Home() {
                     class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     id="exampleFormControlInput2"
                     placeholder="Account address"
-                    value={username} onChange={(e) => setUsername(e.target.value)}
+                    value={username} onChange={(e) => {setUsername(e.target.value)
+                                                      setError(null)
+                    }}
                   />
                 </div>
 
@@ -80,7 +88,9 @@ export default function Home() {
                     class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     id="exampleFormControlInput2"
                     placeholder="Pass phrase"
-                    value={password} onChange={(e) => setPassword(e.target.value)}
+                    value={password} onChange={(e) => {setPassword(e.target.value)
+                                                      setError(null)
+                    }}
                   />
                 </div>
 
