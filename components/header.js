@@ -3,8 +3,12 @@ import { signOut, useSession } from "next-auth/react"
 
 export default function sidebar() {
     const { data: session, loading } = useSession();
-
-    console.log({ session, loading })
+    const handleSignOut = async (e) => {
+        e.preventDefault()
+        await signOut()
+      }
+      
+console.log({ session, loading })
     return (
         <div className="pb-32">
             <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -53,11 +57,8 @@ export default function sidebar() {
                                                 <Link href="/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Account Info</Link>
                                             </li>
                                             <li>
-                                                <Link href="/api/auth/signout"
-                                                    onClick={e => {
-                                                        e.preventDefault()
-                                                        signOut()
-                                                    }}
+                                                <Link href="/"
+                                                    onClick={handleSignOut}
                                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                                                     Sign out
                                                 </Link>

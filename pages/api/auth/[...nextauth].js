@@ -2,22 +2,6 @@ import NextAuth from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 const AccountModel = require('../../../mongodb/index.js')
 
-let _name = "";
-let _username = "";
-let _adhaar_number = "";
-let _pan_number = "";
-let _account_address = "";
-
-// var account_data = new account({
-// name: 'Hrishikesh Vastrad',
-// username: 'hrishikesh',
-// adhaar_number: '2144 8674 8552',
-// pan_number: 'QRI37583560',
-// accountAddress: '0xb4049f51c10b848987fDCb61F4d7440A20aEc997',
-// });
-// account_data.save();
-
-
 export default NextAuth({
   providers: [
     CredentialProvider({
@@ -33,31 +17,27 @@ export default NextAuth({
           type: "password"
         },
       },
-      authorize: (credentials) => {
+      authorize: async (credentials) => {
         // verifying credentials using if statement
         if ((credentials.username === "abhishek" ||
           credentials.username === "athar" ||
           credentials.username === "sangamesh" ||
           credentials.username === "hrishikesh") && credentials.password === "123") {
-
-            // Database look up
-            AccountModel.findOne({username: credentials.username}).then((account)=>{
-              if(!account){
-                console.error('Account not found');
-                return;
-              }
-              console.log('fetched details for: ', account.name);
-              _name = account.name;
-              _username = account.username;
-              _adhaar_number = account.adhaar_number;
-              _pan_number = account.pan_number;
-              _account_address = account.accountAddress;
-            }).catch((error)=>{
-              console.error('Error finding account: ', error.message);
-            });
-          return {
-            id: 11,
-          };
+          try {
+            const account = await AccountModel.findOne({username: credentials.username});
+            if(!account){
+              console.error('Account not found');
+              return null;
+            }
+            console.log('fetched details for: ', account.name);
+            return {
+              id: 11,
+              account,
+            };
+          } catch (error) {
+            console.error('Error finding account: ', error.message);
+            return null;
+          }
         }
         // login failed
         return null;
@@ -65,21 +45,25 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    jwt: ({ token, user }) => {
+    jwt: async ({ token, user }) => {
       // first time jwt callback is run, user object is available
       if (user) {
         token.id = user.id;
         token.address = user.address;
+        token.account = user.account;
       }
       return token;
     },
-    session: ({ session, token }) => {
+    session: async ({ session, token }) => {
       if (token) {
-        session.user.name = _name;
-        session.user.username = _username;
-        session.user.adhaar_number = _adhaar_number;
-        session.user.pan_number = _pan_number;
-        session.user.account_address = _account_address;
+        const { account } = token;
+        if (account) {
+          session.user.name = account.name;
+          session.user.username = account.username;
+          session.user.adhaar_number = account.adhaar_number;
+          session.user.pan_number = account.pan_number;
+          session.user.account_address = account.accountAddress;
+        }
       }
       return session;
     },
