@@ -3,9 +3,19 @@ import { SessionProvider, useSession, getSession, signIn } from "next-auth/react
 
 export default function Home() {
   const { data: session } = useSession()
-  const { loading } = useState(true)
+  const [loading, setLoading] = useState(true)
 
-  
+  useEffect(() => {
+    const securePage = async () => {
+      const session = await getSession()
+      if(!session){
+        signIn()
+      }else{
+        setLoading(false)
+      }
+    }
+    securePage()
+  }, [])
 
   //for fetching balance
   const [balance, setBalance] = useState('');
