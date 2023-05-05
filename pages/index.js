@@ -3,31 +3,34 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import { useState, useEffect } from "react"
+import { SessionProvider, getProviders, signOut, useSession, getSession } from "next-auth/react"
+
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
 
-  //for fetching balance
-  const [address, setAddress] = useState('');
-  const [balance, setBalance] = useState('');
-  const fetchBalance = async () => {
-    const response = await fetch('/api/balance', {
-      method: 'POST',
-      body: JSON.stringify({ address }),
-      headers: {
-        'content-Type': 'application/json',
-      },
-    })
-    const data = await response.json()
-    setBalance(data.balance);
-    console.log(data);
-  }
+  const { data: session, loading } = useSession()
+
+  //for fetching acc address
+  useEffect(() => {
+    async function fetchData() {
+      const session = await getSession();
+      while (!session || !session.user) {
+        // wait for session.user to become available
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+      setFrom(session.user.accountAddress);
+    }
+    fetchData();
+  }, []);
+
   //for transferring
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [amount, setAmount] = useState('');
   const transferAmount = async () => {
+    setFrom(session.user.accountAddress);
     const response = await fetch('/api/transfer', {
       method: 'POST',
       body: JSON.stringify({ from, to, amount }),
@@ -48,57 +51,61 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="flex justify-center pt-10">
-          <div className="w-2/6 bg-white px-12 py-5 rounded-lg drop-shadow-md">
-            <div className="text-center py-9">
-              <p className="font-bold text-3xl pb-3">Current Balance - Rs {balance}</p>
-              <p className="font-thin">account address - {address}</p>
-            </div>
-            <form className="my-6">
-              {/* <!-- Resquest amount input --> */}
-              <p className="flex justify-center font-bold text-2xl pb-3">Fetch Balance</p>
-              <div class="mb-3">
-                <input
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  type="text"
-                  class="form-control block w-full px-4 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  id="exampleFormControlInput2"
-                  placeholder="Account address"
-                />
+        {/* if user is not logged in */}
+        {!loading && !session && (
+          <div className="flex justify-center pt-10">
+          <div className="xl:w-3/12 lg:w-3/12 md:w-8/12 md:mb-0 bg-white px-12 py-16 rounded-lg drop-shadow-md">
+              <div className="text-center py-9">
+                  <p className="font-bold text-3xl pb-3">Login</p>
+                  <p className="font-thin">Enter your Credentials</p>
               </div>
-              <div className="flex justify-center">
-                <button
-                  onClick={fetchBalance}
-                  type="button"
-                  className="mb-3 px-10 py-3 bg-blue-600 text-white font-medium text-sm uppercase rounded-md shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                  Fetch
-                </button>
-              </div>
-            </form>
-            {/* <form className="my-6">
-                        <p className="flex justify-center font-bold text-2xl pb-3">Request Money</p>
-                        <div class="mb-3">
-                            <input
-                                type="text"
-                                class="form-control block w-full px-4 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                id="exampleFormControlInput2"
-                                placeholder="Amount"
-                            />
-                        </div>
-                        <div className="flex justify-center">
-                        <button
-                            type="button"
-                            className="mb-3 px-10 py-3 bg-blue-600 text-white font-medium text-sm uppercase rounded-md shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                            Get
-                        </button>
-                        </div>
-                    </form> */}
-            <form className="my-6">
+              <form>
+                  {/* <!-- username or account address input --> */}
+                  <div class="mb-6">
+                      <input
+                          type="text"
+                          class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                          id="exampleFormControlInput2"
+                          placeholder="Account address"
+                      />
+                  </div>
 
+                  {/* <!-- Password input --> */}
+                  <div class="mb-6">
+                      <input
+                          type="password"
+                          class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                          id="exampleFormControlInput2"
+                          placeholder="Pass phrase"
+                      />
+                  </div>
+
+                  <div class="text-center">
+                      <button
+                          type="button"
+                          class="inline-block px-10 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded-md shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                          Login
+                      </button>
+                      {/* <div class="text-center mb-6 pt-6 ">
+                          <Link href="/create-account" class="text-gray-800 font-normal">New user? Create account!</Link>
+                      </div> */}
+                  </div>
+              </form>
+          </div>
+      </div>
+        )}
+
+        {/* If user is logged in  */}
+        {session && (
+          <div className="flex justify-center pt-10">
+          <div className="w-2/6 bg-white px-12 py-5 rounded-lg drop-shadow-md">
+            <form className="my-6">
               {/* <!-- Transfer amount --> */}
-              <p className="flex justify-center font-bold text-2xl pb-3">Transfer Money</p>
-              <div class="mb-3">
+              <div className="text-center py-9">
+                <p className="flex justify-center font-bold text-3xl pb-3">Transfer Money</p>
+                <p className="font-thin">account address - {session.user.accountAddress}</p>
+              </div>
+              {/* <div class="mb-3">
                 <input
                   value={from}
                   onChange={(e) => setFrom(e.target.value)}
@@ -107,7 +114,7 @@ export default function Home() {
                   id="exampleFormControlInput2"
                   placeholder="Sender address"
                 />
-              </div>
+              </div> */}
               <div class="mb-3">
                 <input
                   value={to}
@@ -115,7 +122,7 @@ export default function Home() {
                   type="text"
                   class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   id="exampleFormControlInput2"
-                  placeholder="Receiver address"
+                  placeholder="To address"
                 />
               </div>
               <div class="mb-3">
@@ -139,6 +146,7 @@ export default function Home() {
             </form>
           </div>
         </div>
+        )}
       </main>
     </>
   )
