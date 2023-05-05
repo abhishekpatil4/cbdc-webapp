@@ -2,7 +2,11 @@ import NextAuth from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 const AccountModel = require('../../../mongodb/index.js')
 
+let _name = "";
 let _username = "";
+let _adhaar_number = "";
+let _pan_number = "";
+let _account_address = "";
 
 // var account_data = new account({
 // name: 'Hrishikesh Vastrad',
@@ -42,14 +46,17 @@ export default NextAuth({
                 console.error('Account not found');
                 return;
               }
-              console.log('Account name: ', account.name);
+              console.log('fetched details for: ', account.name);
+              _name = account.name;
               _username = account.username;
+              _adhaar_number = account.adhaar_number;
+              _pan_number = account.pan_number;
+              _account_address = account.accountAddress;
             }).catch((error)=>{
               console.error('Error finding account: ', error.message);
             });
           return {
             id: 11,
-            name: "Abhishek",
           };
         }
         // login failed
@@ -68,13 +75,17 @@ export default NextAuth({
     },
     session: ({ session, token }) => {
       if (token) {
-        session.user.username = "abhishek";
-        session.user.adhaar_number = "adhaar_num";
-        session.user.pan_number = "pan_num";
-        session.user.account_address = "acc_address";
+        session.user.name = _name;
+        session.user.username = _username;
+        session.user.adhaar_number = _adhaar_number;
+        session.user.pan_number = _pan_number;
+        session.user.account_address = _account_address;
       }
       return session;
     },
+  },
+  pages: {
+    signIn : '/',
   },
   secret: "test",
   jwt: {

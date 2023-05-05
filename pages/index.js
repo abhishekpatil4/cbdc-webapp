@@ -1,29 +1,31 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import { useState, useEffect } from "react"
-import { SessionProvider, getProviders, signOut, useSession, getSession } from "next-auth/react"
-
+import { useState } from "react"
+import { useSession, getSession } from "next-auth/react"
+import Link from 'next/link'
+import { signIn, signOut } from "next-auth/react";
 
 const inter = Inter({ subsets: ['latin'] })
 
+
 export default function Home() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const { data: session, loading } = useSession()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await signOut({ redirect: false }); // clear the session data
+    const result = await signIn("credentials", {
+      username,
+      password,
+      redirect: false,
+    });
+    console.log('handling submit')
+    console.log(result);
+    // Redirect the user to the appropriate page based on the result of the authentication process
+  };
 
-  //for fetching acc address
-  useEffect(() => {
-    async function fetchData() {
-      const session = await getSession();
-      while (!session || !session.user) {
-        // wait for session.user to become available
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
-      setFrom(session.user.accountAddress);
-    }
-    fetchData();
-  }, []);
+  let { data: session, loading } = useSession()
 
   //for transferring
   const [from, setFrom] = useState('');
@@ -59,7 +61,7 @@ export default function Home() {
                   <p className="font-bold text-3xl pb-3">Login</p>
                   <p className="font-thin">Enter your Credentials</p>
               </div>
-              <form>
+              <form onSubmit={handleSubmit}>
                   {/* <!-- username or account address input --> */}
                   <div class="mb-6">
                       <input
@@ -67,6 +69,7 @@ export default function Home() {
                           class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                           id="exampleFormControlInput2"
                           placeholder="Account address"
+                          value={username} onChange={(e) => setUsername(e.target.value)}
                       />
                   </div>
 
@@ -77,18 +80,22 @@ export default function Home() {
                           class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                           id="exampleFormControlInput2"
                           placeholder="Pass phrase"
+                          value={password} onChange={(e) => setPassword(e.target.value)}
                       />
                   </div>
 
                   <div class="text-center">
                       <button
-                          type="button"
+                          type="submit"
                           class="inline-block px-10 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded-md shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                           Login
                       </button>
                       {/* <div class="text-center mb-6 pt-6 ">
                           <Link href="/create-account" class="text-gray-800 font-normal">New user? Create account!</Link>
                       </div> */}
+                      <Link href="/api/auth/signin">
+                        Login
+                      </Link>
                   </div>
               </form>
           </div>
@@ -103,7 +110,9 @@ export default function Home() {
               {/* <!-- Transfer amount --> */}
               <div className="text-center py-9">
                 <p className="flex justify-center font-bold text-3xl pb-3">Transfer Money</p>
-                <p className="font-thin">account address - {session.user.accountAddress}</p>
+                {session && session.user && (
+                  <p className="font-thin">account address - {session.user.account_address}</p>
+                )}
               </div>
               {/* <div class="mb-3">
                 <input

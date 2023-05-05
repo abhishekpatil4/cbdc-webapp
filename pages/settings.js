@@ -1,29 +1,16 @@
-import { SessionProvider, getProviders, signOut, useSession, getSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import { useState, useEffect } from "react"
 
 
 
 export default function settingss() {
     const { data: session, loading } = useSession()
-    const [username, setUsername] = useState();
-    //for fetching session details
-    useEffect(() => {
-        async function fetchData() {
-            const session_ = await getSession();
-            while (!session_ || !session_.user) {
-                // wait for session.user to become available
-                await new Promise(resolve => setTimeout(resolve, 1000));
-            }
-            setUsername(session_.user.username);
-        }
-        fetchData();
-        console.log('Session username -> ' + username);
-    }, []);
-
+    
     return (
         <>
 
-            <div class="max-w-7xl pl-[34em]">
+            {session && session.user && (
+                <div class="max-w-7xl pl-[34em]">
                 <div className="text-center py-9">
                     <p className="font-bold text-3xl pb-3">Account Info</p>
                 </div>
@@ -44,7 +31,7 @@ export default function settingss() {
                                 Name
                             </th>
                             <td class="px-6 py-4">
-                                Abhishek Patil
+                                {session.user.name}
                             </td>
                         </tr>
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -52,7 +39,7 @@ export default function settingss() {
                                 Username
                             </th>
                             <td class="px-6 py-4">
-                                abhishekpatil4
+                                {session.user.username}
                             </td>
                         </tr>
                         <tr class="bg-white border-b dark:bg-gray-800">
@@ -60,7 +47,7 @@ export default function settingss() {
                                 Adhaar number
                             </th>
                             <td class="px-6 py-4">
-                                809 789 6789
+                                {session.user.adhaar_number}
                             </td>
                         </tr>
                         <tr class="bg-white border-b dark:bg-gray-800">
@@ -68,7 +55,7 @@ export default function settingss() {
                                 PAN number
                             </th>
                             <td class="px-6 py-4">
-                                900863579
+                                {session.user.pan_number}
                             </td>
                         </tr>
                         <tr class="bg-white border-b dark:bg-gray-800">
@@ -76,12 +63,13 @@ export default function settingss() {
                                 Account address
                             </th>
                             <td class="px-6 py-4">
-                                0x5757695629567966
+                                {session.user.account_address}
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            )}
 
         </>
     )

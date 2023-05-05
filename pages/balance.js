@@ -1,24 +1,10 @@
-import { useState, useEffect } from "react"
-import { SessionProvider, getProviders, signOut, useSession, getSession } from "next-auth/react"
+import { useState } from "react"
+import { SessionProvider, useSession } from "next-auth/react"
 
 export default function Home() {
   const { data: session, loading } = useSession()
 
-  //for fetching acc address
-  useEffect(() => {
-    async function fetchData() {
-      const session = await getSession();
-      while (!session || !session.user) {
-        // wait for session.user to become available
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
-      setAddress(session.user.accountAddress);
-    }
-    fetchData();
-  }, []);
-  
   //for fetching balance
-  const [address, setAddress] = useState('');
   const [balance, setBalance] = useState('');
   const fetchBalance = async () => {
     const response = await fetch('/api/balance', {
@@ -40,7 +26,7 @@ export default function Home() {
           <div className="text-center py-9">
           <p className="font-bold text-3xl pb-3">Current Balance - Rs {balance}</p>
             {
-              session && session.user && (<p className="font-thin">account address - {session.user.accountAddress}</p>)
+              session && session.user && (<p className="font-thin">account address - {session.user.account_address}</p>)
             }
           </div>
           <form className="my-6">
