@@ -54,7 +54,7 @@ export default function settingss() {
                             </tr>
                         </thead>
                         <tbody className="text-lg font-normal">
-                            {transactions.map((transaction) => (
+                            {transactions.map((transaction) => (session.user.account_address === transaction.receiverAddress ? (
                                 <tr class="bg-green-400">
                                     <th scope="row" class="px-6 py-2 font-normal">
                                         {new Date(transaction.date).toLocaleString('en-GB', {
@@ -63,25 +63,29 @@ export default function settingss() {
                                         })}
                                     </th>
                                     <td class="px-6 py-2">
-                                        {transaction.receiverAddress}
+                                        Transfer from
+                                        {' ' + transaction.senderAddress}
                                     </td>
                                     <td class="px-6 py-2">
                                         {transaction.amount}
                                     </td>
                                 </tr>
-                            ))}
-
-                            {/* <tr class="bg-red-400">
+                            ) : (<tr class="bg-red-400">
                                 <th scope="row" class="px-6 py-2 font-normal">
-                                    April 21st 23
+                                    {new Date(transaction.date).toLocaleString('en-GB', {
+                                        dateStyle: 'short',
+                                        timeStyle: 'short'
+                                    })}
                                 </th>
                                 <td class="px-6 py-2">
-                                    Sweep to 0x43csdc
+                                    Transfer to
+                                    {' ' + transaction.receiverAddress}
                                 </td>
                                 <td class="px-6 py-2">
-                                    150
+                                    {transaction.amount}
                                 </td>
-                            </tr> */}
+                            </tr>)
+                            ))}
                         </tbody>
                     </table>
                 </div>

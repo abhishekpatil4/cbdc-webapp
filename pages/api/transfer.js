@@ -49,6 +49,30 @@ export default async function handler(req, res) {
             console.error('Error finding account: ', error.message);
             return null;
         }
+        try {
+            const account2 = await AccountModel.findOne({ accountAddress: to });
+            if (!account2) {
+                console.error('Account not found');
+                return null;
+            }
+            const newTransaction = {
+                senderAddress: from_,
+                receiverAddress: to,
+                amount: amt,
+                date: new Date(),
+            }
+            account2.transactions.push(newTransaction);
+            // Save the updated document to the database
+            account2.save().then(() => {
+                console.log('Transaction added to account 2');
+            }).catch((error) => {
+                console.error('Error saving account 2:', error.message);
+            });
+
+        } catch (error) {
+            console.error('Error finding account 2: ', error.message);
+            return null;
+        }
     } catch (error) {
         console.error(error);
         res.status(500).send("Error while transfering");
