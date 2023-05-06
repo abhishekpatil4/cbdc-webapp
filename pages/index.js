@@ -11,7 +11,14 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const userData = {
+    abhishek:"0xaf28babb597903f16a4ede2a08fc9393f451034b",
+    athar:"0x57FEd45a14d5f8d456Dc4b4e188AeF5d67f08A0C",
+    sangamesh:"0xBB6E059108aa690c98a9956C9341d4af374ccD9f",
+    hrishikesh:"0xb4049f51c10b848987fDCb61F4d7440A20aEc997"
+  }
 
+  // for signing in
   const handleSubmit = async (e) => {
     e.preventDefault();
     await signOut({ redirect: false }); // clear the session data

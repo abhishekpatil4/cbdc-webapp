@@ -244,3 +244,6 @@ miner.stop()
 eth.accounts
 eth.getBalance(eth.accounts[2])
 eth.getBalance(eth.accounts[1])
+miner.setEtherbase(eth.accounts[0])
+miner.start()
+miner.stop()

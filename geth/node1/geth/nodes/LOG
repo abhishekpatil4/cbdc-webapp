@@ -462,3 +462,38 @@
 01:40:30.578691 table@remove removed @92
 01:40:46.036868 db@close closing
 01:40:46.036972 db@close done T·103.065µs
+=============== May 6, 2023 (IST) ===============
+09:46:05.753894 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:46:05.756659 version@stat F·[0 1] S·181B[0B 181B] Sc·[0.00 0.00]
+09:46:05.756711 db@open opening
+09:46:05.756835 journal@recovery F·1
+09:46:05.759400 journal@recovery recovering @103
+09:46:05.769508 memdb@flush created L0@106 N·1 S·162B "loc..seq,v66":"loc..seq,v66"
+09:46:05.771561 version@stat F·[1 1] S·343B[162B 181B] Sc·[0.25 0.00]
+09:46:05.826397 db@janitor F·5 G·1
+09:46:05.826445 db@janitor removing table-102
+09:46:05.826660 db@open done T·69.933006ms
+09:49:54.967345 db@close closing
+09:49:54.967397 db@close done T·52.275µs
+=============== May 6, 2023 (IST) ===============
+09:50:03.783830 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:50:03.785169 version@stat F·[1 1] S·343B[162B 181B] Sc·[0.25 0.00]
+09:50:03.785231 db@open opening
+09:50:03.785408 journal@recovery F·1
+09:50:03.787446 journal@recovery recovering @107
+09:50:03.796495 memdb@flush created L0@109 N·1 S·162B "loc..seq,v68":"loc..seq,v68"
+09:50:03.798636 version@stat F·[2 1] S·505B[324B 181B] Sc·[0.50 0.00]
+09:50:03.852008 db@janitor F·5 G·0
+09:50:03.852046 db@open done T·66.793475ms
+09:50:26.837849 db@close closing
+09:50:26.837931 db@close done T·80.413µs
+=============== May 6, 2023 (IST) ===============
+10:22:42.328751 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+10:22:42.329476 version@stat F·[2 1] S·505B[324B 181B] Sc·[0.50 0.00]
+10:22:42.329546 db@open opening
+10:22:42.329698 journal@recovery F·1
+10:22:42.332220 journal@recovery recovering @110
+10:22:42.342720 memdb@flush created L0@112 N·1 S·162B "loc..seq,v70":"loc..seq,v70"
+10:22:42.348511 version@stat F·[3 1] S·667B[486B 181B] Sc·[0.75 0.00]
+10:22:42.419153 db@janitor F·6 G·0
+10:22:42.419190 db@open done T·89.619638ms

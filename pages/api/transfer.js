@@ -1,3 +1,5 @@
+const AccountModel = require('../../mongodb/index.js')
+
 export default async function handler(req, res) {
     const Web3 = require('web3');
     const fs = require('fs');
@@ -22,7 +24,31 @@ export default async function handler(req, res) {
             .transfer(to, amt)
             .send({ from: from_ })
             .then(console.log);
-            res.status(200).send("Transfer successful");
+        res.status(200).send("Transfer successful");
+        try {
+            const account = await AccountModel.findOne({ accountAddress: from_ });
+            if (!account) {
+                console.error('Account not found');
+                return null;
+            }
+            const newTransaction = {
+                senderAddress: from_,
+                receiverAddress: to,
+                amount: amt,
+                date: new Date(),
+            }
+            account.transactions.push(newTransaction);
+            // Save the updated document to the database
+            account.save().then(() => {
+                console.log('Transaction added to account');
+            }).catch((error) => {
+                console.error('Error saving account:', error.message);
+            });
+
+        } catch (error) {
+            console.error('Error finding account: ', error.message);
+            return null;
+        }
     } catch (error) {
         console.error(error);
         res.status(500).send("Error while transfering");
