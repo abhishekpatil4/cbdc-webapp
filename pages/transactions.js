@@ -54,18 +54,24 @@ export default function settingss() {
                             </tr>
                         </thead>
                         <tbody className="text-lg font-normal">
-                            <tr class="bg-green-400">
-                                <th scope="row" class="px-6 py-2 font-normal">
-                                    March 14th 23
-                                </th>
-                                <td class="px-6 py-2">
-                                    Transfer from 0xdc455
-                                </td>
-                                <td class="px-6 py-2">
-                                    500
-                                </td>
-                            </tr>
-                            <tr class="bg-red-400">
+                            {transactions.map((transaction) => (
+                                <tr class="bg-green-400">
+                                    <th scope="row" class="px-6 py-2 font-normal">
+                                        {new Date(transaction.date).toLocaleString('en-GB', {
+                                            dateStyle: 'short',
+                                            timeStyle: 'short'
+                                        })}
+                                    </th>
+                                    <td class="px-6 py-2">
+                                        {transaction.receiverAddress}
+                                    </td>
+                                    <td class="px-6 py-2">
+                                        {transaction.amount}
+                                    </td>
+                                </tr>
+                            ))}
+
+                            {/* <tr class="bg-red-400">
                                 <th scope="row" class="px-6 py-2 font-normal">
                                     April 21st 23
                                 </th>
@@ -75,7 +81,7 @@ export default function settingss() {
                                 <td class="px-6 py-2">
                                     150
                                 </td>
-                            </tr>
+                            </tr> */}
                         </tbody>
                     </table>
                 </div>
