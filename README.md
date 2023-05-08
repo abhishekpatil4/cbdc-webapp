@@ -40,3 +40,7 @@ Run NextJs Project
 ```bash
   npm run dev
 ```
+
+![cbdc-ui](https://user-images.githubusercontent.com/83769052/236819973-8d7da80f-f901-4e83-af36-0276a7a4516d.png)
+
+
