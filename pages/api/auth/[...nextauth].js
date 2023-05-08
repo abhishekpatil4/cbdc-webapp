@@ -2,6 +2,15 @@ import NextAuth from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 const AccountModel = require('../../../mongodb/index.js')
 
+// var acc = new AccountModel({
+// name: "SBI KUD Branch",
+// username: "admin",
+// adhaar_number: "IDIB000T131",
+// pan_number: "Nirmala Shetty",
+// accountAddress:"0x717c913b027e831f82b8623be4550e2e92fb96b4"
+// });
+// acc.save();
+
 export default NextAuth({
   providers: [
     CredentialProvider({
@@ -22,7 +31,8 @@ export default NextAuth({
         if ((credentials.username === "abhishek" ||
           credentials.username === "athar" ||
           credentials.username === "sangamesh" ||
-          credentials.username === "hrishikesh") && credentials.password === "123") {
+          credentials.username === "hrishikesh" || 
+          credentials.username === "admin") && credentials.password === "123") {
           try {
             const account = await AccountModel.findOne({username: credentials.username});
             if(!account){

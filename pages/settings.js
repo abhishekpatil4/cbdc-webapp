@@ -38,9 +38,16 @@ export default function settingss() {
                         </thead>
                         <tbody className="text-xl">
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Name
-                                </th>
+                                {session.user.username === "admin" ? (
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        Branch Name
+                                    </th>
+                                ) :
+                                    (
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            Name
+                                        </th>
+                                    )}
                                 <td class="px-6 py-4">
                                     {session.user.name}
                                 </td>
@@ -54,28 +61,57 @@ export default function settingss() {
                                 </td>
                             </tr>
                             <tr class="bg-white border-b dark:bg-gray-800">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Adhaar number
-                                </th>
+                                {session.user.username === "admin" ? (
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        IFSC Code
+                                    </th>
+                                ) :
+                                    (
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            Adhaar number
+                                        </th>
+                                    )}
                                 <td class="px-6 py-4">
                                     {session.user.adhaar_number}
                                 </td>
                             </tr>
                             <tr class="bg-white border-b dark:bg-gray-800">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    PAN number
-                                </th>
+                                {session.user.username === "admin" ? (
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        Manager Name
+                                    </th>
+                                ) :
+                                    (
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            PAN number
+                                        </th>
+                                    )}
                                 <td class="px-6 py-4">
                                     {session.user.pan_number}
                                 </td>
                             </tr>
                             <tr class="bg-white border-b dark:bg-gray-800">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    Account address
-                                </th>
-                                <td class="px-6 py-4">
-                                    {session.user.account_address}
-                                </td>
+                                {session.user.username === "admin" ? (
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        Address
+                                    </th>
+                                ) :
+                                    (
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            Account address
+                                        </th>
+                                    )}
+                                {session.user.username === "admin" ? (
+                                    <td class="px-6 py-4">
+                                        Karnataka University Campus, Dharwad, Karnataka 580003
+                                    </td>
+                                ) :
+                                    (
+                                        <td class="px-6 py-4">
+                                            {session.user.account_address}
+                                        </td>
+                                    )}
+
                             </tr>
                         </tbody>
                     </table>
